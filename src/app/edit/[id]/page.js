@@ -1,44 +1,61 @@
 'use client'
-
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { Result } from 'postcss'
 import React, { useEffect, useState } from 'react'
 
-export default function create() {
+export default function edit({ params }) {
     const [title, setTitle] = useState("")
     const [img, setImg] = useState("")
     const [content, setContent] = useState("")
 
-    const router = useRouter();
- 
+    const [dataPost, setDataPost] = useState("")
+    const { id } = params
 
- 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
-        if (!title || !img || !content) {
-            alert("Please complete all input");
-            return;
-        }
+    console.log(dataPost);
 
-        const res = await fetch(`http://localhost:3000/api/post`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ title, img, content })
+
+
+
+
+    useEffect(() => {
+        getApiPost(id)
+    }, [])
+    const getApiPost = () => {
+        fetch(`http://localhost:3000/api/post/${params.id}`).then(res => res.json()).then(result => {
+            setDataPost(result)
+
         })
-        console.log();
-        if (res.ok) {
-            router.push('/')
-        } else {
-            throw new Error("Error")
-        }
-
     }
 
+    // const getApi = async (id) => {
+    //     try {
+    //         const res = await fetch(`http://localhost:3000/api/post/6687ea40cf3ca6f1628e1df9`, {
+    //             method: "GET",
+    //             cache: "no-store"
+
+    //         })
+    //         if (!res.ok) {
+    //             console.log("success");
+    //         }
+
+    //         const data = await res.json()
+    //         setDataPost(data)
+
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+
+    // }
 
 
+
+
+
+
+
+    const handleUpdate = () => {
+        console.log('werapol');
+    }
     return (
         <div className='max-w-4xl md:mx-auto mx-10 '>
             <h1 className='my-5'>Create Post</h1>
@@ -48,7 +65,7 @@ export default function create() {
                     Back
                 </Link>
             </div>
-            <form className='mt-5' onSubmit={handleSubmit}>
+            <form className='mt-5' onSubmit={handleUpdate}>
                 <input type="text"
                     name="title"
                     id="title"
