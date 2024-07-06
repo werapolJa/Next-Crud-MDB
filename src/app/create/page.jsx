@@ -11,9 +11,9 @@ export default function create() {
     const [content, setContent] = useState("")
 
     const router = useRouter();
- 
 
- 
+
+
     const handleSubmit = async (event) => {
         event.preventDefault()
         if (!title || !img || !content) {

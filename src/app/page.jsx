@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [postApi, setPostApi] = useState([])
-  console.log(postApi);
+  // console.log(postApi);
   useEffect(() => {
 
     const ApiPost = async () => {
@@ -23,6 +23,14 @@ export default function Home() {
   //     setPostApi(result)
   //   })
   // }, [])
+    const handleDetele=async(id)=>{
+      const res = await fetch(`http://localhost:3000/api/post/${id}`,{
+        method:"DELETE"
+      })
+      window.location.reload()
+      console.log(id);
+    }
+
 
   return (
     <main className="container mx-auto ">
@@ -38,10 +46,19 @@ export default function Home() {
               <div className=" md:w-full">
                 <img src={e.img} alt="" className="w-full" />
               </div>
-              <article  className="text-wrap"><h1 className="text-ellipsis overflow-hidden  text-wrap ...">{e.content}</h1></article>
+              <article className="text-wrap"><h1 className="text-ellipsis overflow-hidden  text-wrap ...">{e.content}</h1></article>
               <div className="flex  gap-2">
-                <Link href={`edit/${e._id}`}><button className="py-2 px-3 bg-slate-500 text-white rounded-md">Edit</button></Link>
-                <button className="py-2 px-3 bg-red-500 text-white rounded-md">Delete</button>
+                <Link href={`edit/${e._id}`}>
+                  <button className="py-2 px-3 bg-slate-500 text-white rounded-md">
+                    Edit
+                  </button>
+                </Link>
+                <button
+                  className="py-2 px-3 bg-red-500 text-white rounded-md"
+                  onClick={()=> handleDetele(e._id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           ))

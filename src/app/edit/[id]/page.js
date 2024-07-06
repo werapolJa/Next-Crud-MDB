@@ -1,6 +1,8 @@
 'use client'
 import Link from 'next/link'
-import { Result } from 'postcss'
+import { useRouter } from 'next/navigation'
+
+
 import React, { useEffect, useState } from 'react'
 
 export default function edit({ params }) {
@@ -10,8 +12,8 @@ export default function edit({ params }) {
 
     const [dataPost, setDataPost] = useState("")
     const { id } = params
-
-    console.log(dataPost);
+    const router = useRouter()
+    console.log(title);
 
 
 
@@ -23,7 +25,9 @@ export default function edit({ params }) {
     const getApiPost = () => {
         fetch(`http://localhost:3000/api/post/${params.id}`).then(res => res.json()).then(result => {
             setDataPost(result)
-
+            setTitle(result.post?.title)
+            setImg(result.post?.img)
+            setContent(result.post?.content)
         })
     }
 
@@ -53,12 +57,23 @@ export default function edit({ params }) {
 
 
 
-    const handleUpdate = () => {
+    const handleUpdate = async (e) => {
+        e.preventDefault()
+        const res = await fetch(`http://localhost:3000/api/post/${params.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title, img, content })
+        })
+        if (res.ok) {
+            router.push('/')
+        }
         console.log('werapol');
     }
     return (
         <div className='max-w-4xl md:mx-auto mx-10 '>
-            <h1 className='my-5'>Create Post</h1>
+            <h1 className='my-5'>Update Post</h1>
             <hr className='my-3' />
             <div className="">
                 <Link href='/' className='text-white bg-slate-500 py-2 px-3 rounded-sm '>
@@ -67,12 +82,14 @@ export default function edit({ params }) {
             </div>
             <form className='mt-5' onSubmit={handleUpdate}>
                 <input type="text"
+                    value={title}
                     name="title"
                     id="title"
                     className='bg-slate-200 p-1 w-[300px] block mb-3'
                     onChange={(e) => { setTitle(e.target.value) }}
                 />
                 <input
+                    value={img}
                     type="text"
                     name="img"
                     id="img"
@@ -80,6 +97,7 @@ export default function edit({ params }) {
                     onChange={(e) => { setImg(e.target.value) }}
                 />
                 <textarea
+                    value={content}
                     type="text"
                     name="content"
                     id="content"
@@ -89,7 +107,7 @@ export default function edit({ params }) {
                 />
                 <button
                     className='py-2 px-3 bg-green-500 text-white rounded-sm'
-                    type='submit'>Create Post
+                    type='submit'>Update Post
                 </button>
             </form>
         </div>
