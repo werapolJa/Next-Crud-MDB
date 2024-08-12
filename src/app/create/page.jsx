@@ -5,10 +5,10 @@ import { useRouter } from 'next/navigation'
 import { Result } from 'postcss'
 import React, { useEffect, useState } from 'react'
 
-export default function create() {
-    const [title, setTitle] = useState("")
-    const [img, setImg] = useState("")
-    const [content, setContent] = useState("")
+export default function Create() {
+    const [title, setTitle] = useState()
+    const [img, setImg] = useState()
+    const [content, setContent] = useState()
 
     const router = useRouter();
 

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 
 import React, { useEffect, useState } from 'react'
 
-export default function edit({ params }) {
+export default function Edit({ params }) {
     const [title, setTitle] = useState("")
     const [img, setImg] = useState("")
     const [content, setContent] = useState("")
