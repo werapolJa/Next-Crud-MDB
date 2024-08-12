@@ -13,6 +13,7 @@ export default function Create() {
     const router = useRouter();
 
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_LOCAL;
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -21,7 +22,7 @@ export default function Create() {
             return;
         }
 
-        const res = await fetch(`/api/post`, {
+        const res = await fetch(`${apiUrl}/api/post`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
