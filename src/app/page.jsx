@@ -6,12 +6,17 @@ import { Result } from "postcss";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+
+  
+  const apiUrl = process.env.NEXT_PUBLIC_API_LOCAL;
+ 
   const [postApi, setPostApi] = useState([])
-  // console.log(postApi);
+
   useEffect(() => {
 
     const ApiPost = async () => {
-      const res = await fetch(`http://localhost:3000/api/post`)
+      const apiUrl = process.env.Next_API;
+      const res = await fetch(`/api/post`)
       const data = await res.json()
       setPostApi(data.post)
     }
@@ -23,13 +28,14 @@ export default function Home() {
   //     setPostApi(result)
   //   })
   // }, [])
-    const handleDetele=async(id)=>{
-      const res = await fetch(`http://localhost:3000/api/post/${id}`,{
-        method:"DELETE"
-      })
-      window.location.reload()
-      console.log(id);
-    }
+  const handleDetele = async (id) => {
+    const apiUrl = process.env.MONGODB_URI;
+    const res = await fetch(`/api/post/${id}`, {
+      method: "DELETE"
+    })
+    window.location.reload()
+    console.log(id);
+  }
 
 
   return (
@@ -55,7 +61,7 @@ export default function Home() {
                 </Link>
                 <button
                   className="py-2 px-3 bg-red-500 text-white rounded-md"
-                  onClick={()=> handleDetele(e._id)}
+                  onClick={() => handleDetele(e._id)}
                 >
                   Delete
                 </button>

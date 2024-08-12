@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
 export default function Edit({ params }) {
+    const apiUrl = process.env.Next_API
     const [title, setTitle] = useState("")
     const [img, setImg] = useState("")
     const [content, setContent] = useState("")
@@ -23,7 +24,7 @@ export default function Edit({ params }) {
         getApiPost(id)
     }, [])
     const getApiPost = () => {
-        fetch(`http://localhost:3000/api/post/${params.id}`).then(res => res.json()).then(result => {
+        fetch(`/api/post/${params.id}`).then(res => res.json()).then(result => {
             setDataPost(result)
             setTitle(result.post?.title)
             setImg(result.post?.img)
@@ -59,7 +60,7 @@ export default function Edit({ params }) {
 
     const handleUpdate = async (e) => {
         e.preventDefault()
-        const res = await fetch(`http://localhost:3000/api/post/${params.id}`, {
+        const res = await fetch(`/api/post/${params.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"

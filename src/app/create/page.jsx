@@ -21,7 +21,7 @@ export default function Create() {
             return;
         }
 
-        const res = await fetch(`http://localhost:3000/api/post`, {
+        const res = await fetch(`/api/post`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
